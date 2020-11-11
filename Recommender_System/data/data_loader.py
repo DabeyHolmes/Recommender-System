@@ -6,6 +6,16 @@ from Recommender_System.utility.decorator import logger
 ds_path = os.path.join(os.path.dirname(__file__), 'ds')
 
 
+def _read_epinions() -> List[Tuple[int, int, int]]:
+    data = []
+    with open(os.path.join(ds_path, 'epinions-kg/rating.txt'), 'r') as f:
+        for line in f.readlines()[0:]:
+            values = line.strip().split('\t')
+            content_id, user_id, rating = int(values[0]), int(values[1]), int(values[2])
+            data.append((user_id, content_id, rating))
+    return data
+
+
 def _read_ml(relative_path: str, separator: str) -> List[Tuple[int, int, int, int]]:
     data = []
     with open(os.path.join(ds_path, relative_path), 'r') as f:
@@ -65,6 +75,17 @@ def _load_data(read_data_fn: Callable[[], List[tuple]], expect_length: int, expe
     return data
 
 
+@logger('预加载一下数据，', ['data_name', 'expect_length', 'expect_user', 'expect_item'])
+def _look_data(read_data_fn: Callable[[], List[tuple]], expect_length: int, expect_user: int, expect_item: int,
+               data_name: str) -> List[tuple]:
+    data = read_data_fn()
+    n_user, n_item = len(set(d[0] for d in data)), len(set(d[1] for d in data))
+    print(len(data))
+    print(n_user)
+    print(n_item)
+    return data
+
+
 def ml100k() -> List[Tuple[int, int, int, int]]:
     return _load_data(_read_ml100k, 100000, 943, 1682, 'ml100k')
 
@@ -85,6 +106,10 @@ def book_crossing() -> List[Tuple[int, str, int]]:
     return _load_data(_read_book_crossing, 1149780, 105283, 340555, 'Book-Crossing')
 
 
+def epinions() -> List[Tuple[int, int, int]]:
+    return _load_data(_read_epinions, 13668320, 120492, 755760, 'epinions-kg')
+
+
 # 测试数据读的是否正确
 if __name__ == '__main__':
-    data = book_crossing()
+    data = epinions()

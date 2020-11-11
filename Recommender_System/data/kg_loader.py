@@ -79,6 +79,7 @@ lastfm_kg15k = 'lastfm-kg15k', data_loader.lastfm, int
 ml1m_kg20k = 'ml1m-kg20k', data_loader.ml1m, int
 ml1m_kg1m = 'ml1m-kg1m', data_loader.ml1m, int
 ml20m_kg500k = 'ml20m-kg500k', data_loader.ml20m, int
+epinions = 'epinions-kg', data_loader.epinions, int
 
 
 if __name__ == '__main__':
