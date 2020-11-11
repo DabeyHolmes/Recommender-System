@@ -7,7 +7,7 @@ from Recommender_System.utility.evaluation import TopkData
 from Recommender_System.utility.decorator import logger
 
 
-@logger('开始采集负样本，', ('ratio', 'threshold', 'method'))
+@logger('开始采集负样本，', ['ratio', 'threshold', 'method'])
 def negative_sample(data: List[tuple], ratio=1, threshold=0, method='random') -> List[tuple]:
     """
     采集负样本
@@ -93,7 +93,7 @@ def neaten_id(data: List[tuple]) -> Tuple[List[Tuple[int, int, int]], int, int, 
     return new_data, n_user, n_item, user_id_old2new, item_id_old2new
 
 
-@logger('开始数据切分，', ('test_ratio', 'shuffle', 'ensure_positive'))
+@logger('开始数据切分，', ['test_ratio', 'shuffle', 'ensure_positive'])
 def split(data: List[tuple], test_ratio=0.4, shuffle=True, ensure_positive=False) -> Tuple[List[tuple], List[tuple]]:
     """
     将数据切分为训练集数据和测试集数据
@@ -126,7 +126,7 @@ def split(data: List[tuple], test_ratio=0.4, shuffle=True, ensure_positive=False
     return train_data, test_data
 
 
-@logger('开始准备topk评估数据，', ('n_sample_user',))
+@logger('开始准备topk评估数据，', ['n_sample_user',])
 def prepare_topk(train_data: List[Tuple[int, int, int]], test_data: List[Tuple[int, int, int]],
                  n_user: int, n_item: int, n_sample_user=None) -> TopkData:
     """

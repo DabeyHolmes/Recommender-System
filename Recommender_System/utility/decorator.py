@@ -1,7 +1,7 @@
 import time
 import inspect
 from functools import wraps
-from typing import Tuple
+from typing import List
 
 
 def arg_value(arg_name, f, args, kwargs):
@@ -15,7 +15,7 @@ def arg_value(arg_name, f, args, kwargs):
     return inspect.signature(f).parameters[arg_name].default
 
 
-def logger(begin_message: str = None, log_args: Tuple[str] = None, end_message: str = None, log_time: bool = True):
+def logger(begin_message: str = None, log_args: List[str] = None, end_message: str = None, log_time: bool = True):
     def logger_decorator(f):
         @wraps(f)
         def decorated(*args, **kwargs):

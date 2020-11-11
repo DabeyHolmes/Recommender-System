@@ -7,7 +7,7 @@ from Recommender_System.utility.decorator import logger
 kg_path = os.path.join(os.path.dirname(__file__), 'kg')
 
 
-@logger('开始读物品实体映射关系，', ('kg_directory', 'item_id_type'))
+@logger('开始读物品实体映射关系，', ['kg_directory', 'item_id_type'])
 def _read_item_id2entity_id_file(kg_directory: str, item_id_type: type = int) -> Tuple[Dict[Any, int], Dict[int, Any]]:
     item_to_entity = {}
     entity_to_item = {}
@@ -21,7 +21,7 @@ def _read_item_id2entity_id_file(kg_directory: str, item_id_type: type = int) ->
     return item_to_entity, entity_to_item
 
 
-@logger('开始读知识图谱结构图，', ('kg_directory', 'keep_all_head',))
+@logger('开始读知识图谱结构图，', ['kg_directory', 'keep_all_head',])
 def _read_kg_file(kg_directory: str, entity_id_old2new: Dict[int, int], keep_all_head=True) ->\
         Tuple[List[Tuple[int, int, int]], int, int]:
     n_entity = len(entity_id_old2new)

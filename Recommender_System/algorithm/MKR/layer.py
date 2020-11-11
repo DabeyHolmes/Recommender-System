@@ -2,7 +2,7 @@ import tensorflow as tf
 
 
 class CrossLayer(tf.keras.layers.Layer):
-    def call(self, inputs):
+    def call(self, inputs, **kwargs):
         v, e = inputs  # (batch, dim)
         v = tf.expand_dims(v, axis=2)  # (batch, dim, 1)
         e = tf.expand_dims(e, axis=1)  # (batch, 1, dim)
@@ -22,7 +22,7 @@ class CompressLayer(tf.keras.layers.Layer):
         self.weight_t = self.add_weight(shape=(self.dim, 1), regularizer=self.weight_regularizer, name='weight_t')
         self.bias = self.add_weight(shape=self.dim, initializer='zeros', name='bias')
 
-    def call(self, inputs):
+    def call(self, inputs, **kwargs):
         c_matrix, c_matrix_t = inputs  # (batch, dim, dim)
 
         c_matrix = tf.reshape(c_matrix, shape=[-1, self.dim])  # (batch * dim, dim)

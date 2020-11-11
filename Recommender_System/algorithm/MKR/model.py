@@ -4,7 +4,7 @@ from Recommender_System.algorithm.MKR.layer import cross_compress_unit
 from Recommender_System.utility.decorator import logger
 
 
-@logger('初始化MKR模型：', ('n_user', 'n_item', 'n_entity', 'n_relation', 'dim', 'L', 'H', 'l2'))
+@logger('初始化MKR模型：', ['n_user', 'n_item', 'n_entity', 'n_relation', 'dim', 'L', 'H', 'l2'])
 def MKR_model(n_user: int, n_item: int, n_entity: int, n_relation: int, dim=8, L=1, H=1, l2=1e-6) -> Tuple[tf.keras.Model, tf.keras.Model]:
     l2 = tf.keras.regularizers.l2(l2)
 
