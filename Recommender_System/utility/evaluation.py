@@ -16,7 +16,9 @@ class TopkStatistic:
 
 
 def topk_evaluate(topk_data: TopkData, score_fn: Callable[[Dict[str, List[int]]], List[float]],
-                  ks=[1, 2, 5, 10, 20, 50, 100]) -> Tuple[List[float], List[float]]:
+                  ks=None) -> Tuple[List[float], List[float]]:
+    if ks is None:
+        ks = [1, 2, 5, 10, 20, 50, 100]
     kv = {k: TopkStatistic() for k in ks}
     for user_id, item_set in topk_data.test_user_item_set.items():
         ui = {'user_id': [user_id] * len(item_set), 'item_id': list(item_set)}

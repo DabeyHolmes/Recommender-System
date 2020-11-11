@@ -3,3 +3,5 @@ __pycache__/
 *.iml
 data/kg/
 data/ds/
+Recommender_System/data/kg/
+Recommender_System/data/ds/

@@ -9,7 +9,9 @@ def log(epoch, train_loss, train_auc, train_precision, train_recall, test_loss, 
           (epoch + 1, train_loss, train_auc, train_f1, test_loss, test_auc, test_f1))
 
 
-def topk(topk_data: TopkData, score_fn: Callable[[Dict[str, List[int]]], List[float]], ks=[10, 36, 100]):
+def topk(topk_data: TopkData, score_fn: Callable[[Dict[str, List[int]]], List[float]], ks=None):
+    if ks is None:
+        ks = [10, 25, 100]
     precisions, recalls = topk_evaluate(topk_data, score_fn, ks)
     for k, precision, recall in zip(ks, precisions, recalls):
         f1 = 2. * precision * recall / (precision + recall) if precision + recall else 0

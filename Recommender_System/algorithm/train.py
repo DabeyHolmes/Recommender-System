@@ -82,7 +82,7 @@ class RsCallback(tf.keras.callbacks.Callback):
         topk(self.topk_data, self.score_fn)
 
 
-@logger('开始训练，', ('epochs', 'batch', 'execution'))
+@logger('开始训练，', ['epochs', 'batch', 'execution'])
 def train(model: tf.keras.Model, train_data: List[Tuple[int, int, int]], test_data: List[Tuple[int, int, int]],
           topk_data: TopkData, optimizer=None, loss_object=None, epochs=100, batch=512, execution='eager') -> None:
     """
@@ -108,7 +108,7 @@ def train(model: tf.keras.Model, train_data: List[Tuple[int, int, int]], test_da
     train_fn(model, train_ds, test_ds, topk_data, optimizer, loss_object, epochs)
 
 
-@logger('开始测试，', ('batch',))
+@logger('开始测试，', ['batch'])
 def test(model: tf.keras.Model, train_data: List[Tuple[int, int, int]], test_data: List[Tuple[int, int, int]],
          topk_data: TopkData, loss_object=None, batch=512) -> None:
     """
