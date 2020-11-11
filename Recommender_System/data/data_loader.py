@@ -54,7 +54,7 @@ def _read_book_crossing() -> List[Tuple[int, str, int]]:
     return data
 
 
-@logger('开始读数据，', ('data_name', 'expect_length', 'expect_user', 'expect_item'))
+@logger('开始读数据，', ['data_name', 'expect_length', 'expect_user', 'expect_item'])
 def _load_data(read_data_fn: Callable[[], List[tuple]], expect_length: int, expect_user: int, expect_item: int,
                data_name: str) -> List[tuple]:
     data = read_data_fn()
