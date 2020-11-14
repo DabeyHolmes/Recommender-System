@@ -61,11 +61,21 @@ def _read_data_with_kg(kg_loader_config: Tuple[str, Callable[[], List[tuple]], t
                        negative_sample_ratio=1, negative_sample_threshold=0, negative_sample_method='random',
                        keep_all_head=True) -> Tuple[List[Tuple[int, int, int]], List[Tuple[int, int, int]],
                                                     int, int, int, int]:
+
     kg_directory, data_loader_fn, item_id_type = kg_loader_config
     old_item_to_old_entity, old_entity_to_old_item = _read_item_id2entity_id_file(kg_directory, item_id_type)
-    data = data_loader_fn()
-    data = [d for d in data if d[1] in old_item_to_old_entity]  # 去掉知识图谱中不存在的物品
-    data = data_process.negative_sample(data, negative_sample_ratio, negative_sample_threshold, negative_sample_method)
+
+    import json
+    import os
+    if os.path.exists('new_data.json'):
+        with open('new_data.json', 'r') as f:
+            print('成功加载负采样后的数据文件')
+            data = json.load(f)
+    else:
+        data = data_loader_fn()
+        data = [d for d in data if d[1] in old_item_to_old_entity]  # 去掉知识图谱中不存在的物品
+        data = data_process.negative_sample(data, negative_sample_ratio, negative_sample_threshold,
+                                            negative_sample_method)
     data, n_user, n_item, _, item_id_old2new = data_process.neaten_id(data)
     entity_id_old2new = {old_entity: item_id_old2new[old_item] for old_entity, old_item in old_entity_to_old_item.items()}
     kg, n_entity, n_relation = _read_kg_file(kg_directory, entity_id_old2new, keep_all_head)
@@ -83,4 +93,4 @@ epinions = 'epinions-kg', data_loader.epinions, int
 
 
 if __name__ == '__main__':
-    data, kg, n_user, n_item, n_entity, n_relation = _read_data_with_kg(ml1m_kg1m)
+    data, kg, n_user, n_item, n_entity, n_relation = _read_data_with_kg(epinions)

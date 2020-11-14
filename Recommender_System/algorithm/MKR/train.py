@@ -7,7 +7,13 @@ from Recommender_System.utility.decorator import logger
 
 class _KgeCallback(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs=None):
-        tf.print('KGE: epoch=', epoch + 1, ', loss=', logs['loss'], sep='')
+        if logs is not None:
+            if 'loss' in logs:
+                tf.print('KGE: epoch=', epoch + 1, ', loss=', logs['loss'], sep='')
+            else:
+                tf.print('KGE: epoch=', epoch + 1, ', loss=', logs, sep='')
+        else:
+            tf.print('logs is None')
 
 
 def _get_score_fn(model):

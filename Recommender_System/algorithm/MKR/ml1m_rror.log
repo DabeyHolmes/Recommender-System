@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "D:/Admin/Documents/GitHub/Recommender-System/Recommender_System/algorithm/MKR/main.py", line 36, in <module>
+    n_user, n_item, n_entity, n_relation, train_data, test_data, kg, topk_data = data_process.pack_kg(kg_loader.ml1m_kg20k, keep_all_head=False, negative_sample_threshold=4)
+  File "D:\Admin\Documents\GitHub\Recommender-System\Recommender_System\data\data_process.py", line 219, in pack_kg
+    kg_loader_config, negative_sample_ratio, negative_sample_threshold, negative_sample_method, keep_all_head)
+  File "D:\Admin\Documents\GitHub\Recommender-System\Recommender_System\utility\decorator.py", line 30, in decorated
+    result = f(*args, **kwargs)
+  File "D:\Admin\Documents\GitHub\Recommender-System\Recommender_System\data\kg_loader.py", line 80, in _read_data_with_kg
+    entity_id_old2new = {old_entity: item_id_old2new[old_item] for old_entity, old_item in old_entity_to_old_item.items()}
+  File "D:\Admin\Documents\GitHub\Recommender-System\Recommender_System\data\kg_loader.py", line 80, in <dictcomp>
+    entity_id_old2new = {old_entity: item_id_old2new[old_item] for old_entity, old_item in old_entity_to_old_item.items()}
+KeyError: 1

@@ -8,7 +8,7 @@ ds_path = os.path.join(os.path.dirname(__file__), 'ds')
 
 def _read_epinions() -> List[Tuple[int, int, int]]:
     data = []
-    with open(os.path.join(ds_path, 'epinions-kg/rating.txt'), 'r') as f:
+    with open(os.path.join(ds_path, 'epinions/rating.txt'), 'r') as f:
         for line in f.readlines()[0:]:
             values = line.strip().split('\t')
             content_id, user_id, rating = int(values[0]), int(values[1]), int(values[2])
@@ -107,7 +107,7 @@ def book_crossing() -> List[Tuple[int, str, int]]:
 
 
 def epinions() -> List[Tuple[int, int, int]]:
-    return _load_data(_read_epinions, 13668320, 120492, 755760, 'epinions-kg')
+    return _load_data(_read_epinions, 13668320, 120492, 755760, 'epinions')
 
 
 # 测试数据读的是否正确

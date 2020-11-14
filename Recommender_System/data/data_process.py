@@ -20,6 +20,12 @@ def negative_sample(data: List[tuple], ratio=1, threshold=0, method='random') ->
     :return: 带上负样本的数据集
     """
     # 负样本采集权重
+    import json
+    import os
+    if os.path.exists('new_data.json'):
+        with open('new_data.json','r') as f:
+            print('成功加载负采样后的数据文件')
+            return json.load(f)
     if method == 'random':
         negative_sample_weight = {d[1]: 1 for d in data}
     elif method == 'popular':
@@ -49,6 +55,10 @@ def negative_sample(data: List[tuple], ratio=1, threshold=0, method='random') ->
         new_data.extend([(user_id, item_id, 0) for item_id in negative_items])
     for user_id, positive_items in user_positive_set.items():
         new_data.extend([(user_id, item_id, 1) for item_id in positive_items])
+    with open('new_data.json','w') as f:
+        json.dump(new_data,f)
+    print('成功写入json数据')
+
     return new_data
 
 

@@ -1,10 +1,38 @@
+import sys
+
+
+class Logger(object):
+    def __init__(self, filename='default.log', stream=sys.stdout):
+        self.terminal = stream
+        self.log = open(filename, 'w')
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+
+    def flush(self):
+        pass
+
+
+
 if __name__ == '__main__':
+
     import Recommender_System.utility.gpu_memory_growth
     from tensorflow.keras.optimizers import Adam
     from Recommender_System.data import kg_loader, data_process
     from Recommender_System.algorithm.MKR.model import MKR_model
     from Recommender_System.algorithm.MKR.train import train
 
+    # sys.stdout = Logger('MKR_epinions_result_1.log', sys.stdout)
+    # sys.stderr = Logger('MKR_epinions_error_1.log', sys.stderr)
+    # n_user, n_item, n_entity, n_relation, train_data, test_data, kg, topk_data = data_process.pack_kg(
+    #     kg_loader.epinions, keep_all_head=False)
+    # model_rs, model_kge = MKR_model(n_user, n_item, n_entity, n_relation, dim=8, L=2, H=2, l2=1e-6)
+    # train(model_rs, model_kge, train_data, test_data, kg, topk_data, kge_interval=2,
+    #       optimizer_rs=Adam(0.001), optimizer_kge=Adam(0.001), epochs=20, batch=4096)
+
+    sys.stdout = Logger('ml1m_result.log', sys.stdout)
+    sys.stderr = Logger('ml1m_rror.log', sys.stderr)
     n_user, n_item, n_entity, n_relation, train_data, test_data, kg, topk_data = data_process.pack_kg(kg_loader.ml1m_kg20k, keep_all_head=False, negative_sample_threshold=4)
     model_rs, model_kge = MKR_model(n_user, n_item, n_entity, n_relation, dim=8, L=1, H=1, l2=1e-6)
     train(model_rs, model_kge, train_data, test_data, kg, topk_data, kge_interval=3,
